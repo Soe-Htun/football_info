@@ -4,7 +4,7 @@ import LeagueTable from '@/components/LeagueTable'
 const SerieA= async () => {
   const getSerieA= await filterLeague('Serie A')
   return (
-    <div className='w-[600px]'>
+    <div className='w-full'>
       {getSerieA.map((data) => (
         <div key={data.id}>
           <LeagueTable data={data} />

@@ -4,7 +4,7 @@ import LeagueTable from '@/components/LeagueTable'
 const Brasileiro = async () => {
   const getBrasileiro = await filterLeague('Campeonato Brasileiro Série A')
   return (
-    <div className='w-[600px]'>
+    <div className='w-full'>
       {getBrasileiro.map((data) => (
         <div key={data.id}>
           <LeagueTable data={data} />

@@ -6,7 +6,7 @@ const LaLiga = async () => {
   const getLaLiga = await filterLeague('Primera Division')
 
   return (
-    <div className='w-[600px]'>
+    <div className='w-full'>
       {getLaLiga.map((data) => (
         <div key={data.id}>
           <LeagueTable data={data} />
