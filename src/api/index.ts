@@ -21,6 +21,12 @@ function formatDate(date: Date): string {
 }
 
 export const getMatchesForDate = async (date: Date, useCache = true) => {
+  // Return empty data during build if no API token
+  if (!process.env.API_TOKEN) {
+    console.log('No API token found, returning empty data for build')
+    return { matches: [] }
+  }
+
   const dateStr = formatDate(date)
   const cacheKey = `matches-${dateStr}`
 
@@ -120,6 +126,12 @@ export const getMatchesfootballFinished = async () => {
 }
 
 export const getNewsInfo = async () => {
+  // Return empty data during build if no API token
+  if (!process.env.API_TOKEN_NEWS) {
+    console.log('No news API token found, returning empty data for build')
+    return { articles: [] }
+  }
+
   const newsData = await fetch(`https://newsapi.org/v2/everything?apiKey=${process.env.API_TOKEN_NEWS}&q=soccer&pageSize=5`,{next:{revalidate:300}}) // 5 minute cache
   if (!newsData.ok) {
     if (newsData.status === 429) {
