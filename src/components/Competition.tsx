@@ -1,53 +1,54 @@
-import { matchesType } from '@/types'
-import Image from 'next/image'
+'use client'
 
-interface LeagueTableProps {
-  data: matchesType
-  matches: matchesType[] // <-- add this prop
+import { matchesType } from '@/types'
+import Matches from './Matches'
+import CompetitionHeader from './CompetitionHeader'
+import DateHeader from './DateHeader'
+
+interface CompetitionProps {
+  matches: matchesType[]
 }
 
-const Competition = ({data, matches }:LeagueTableProps) => {
-  const nd = new Date(data?.utcDate)
-  const dateConvert = nd.toDateString()
+const Competition = ({ matches }: CompetitionProps) => {
+  const leagueOrder = [
+    "UEFA Champions League",
+    "UEFA Europa League",
+    "UEFA Conference League",
+    "Premier League",
+    "Primera Division",
+    "Bundesliga",
+    "Serie A",
+    "Ligue 1"
+  ]
 
-  console.log('Name', data?.competition);
-  
-  
+  const sortedMatches = [...matches].sort((a, b) => {
+    const aIndex = leagueOrder.indexOf(a.competition.name)
+    const bIndex = leagueOrder.indexOf(b.competition.name)
+
+    const aOrder = aIndex === -1 ? 999 : aIndex
+    const bOrder = bIndex === -1 ? 999 : bIndex
+
+    if (aOrder !== bOrder) {
+      return aOrder - bOrder
+    }
+
+    return new Date(a.utcDate).getTime() - new Date(b.utcDate).getTime()
+  })
+
   return (
-    // <div className='mb-4 flex justify-between items-center px-4 py-1 bg-slate-600 hover:bg-slate-700 rounded-md'>
-    //   <div className='flex space-x-4'>
-    //     <Image src={data?.competition.emblem} alt={data?.competition.name} width={20} height={20} />
-    //     <p className='text-sm text-teal-400'>{data?.competition.name}</p>
-    //   </div>
-    //   <p className='text-xs md:text-sm'>{dateConvert}</p>
-    // </div>
-
-    <div className="flex flex-col">
-      {matches.map((match, index) => {
+    <div>
+      {sortedMatches.map((match, index) => {
         const showCompetition =
-          index === 0 || match.competition.id !== matches[index - 1].competition.id
+          index === 0 || match.competition.id !== sortedMatches[index - 1].competition.id
+
+        const showDate = index === 0 ||
+          new Date(match.utcDate).toDateString() !== new Date(sortedMatches[index - 1].utcDate).toDateString()
 
         return (
-          <div key={match.id} className="mb-2">
-            {/* Competition header */}
-            {showCompetition && (
-              <div className="mb-1 flex items-center px-4 py-1 bg-slate-600 hover:bg-slate-700 rounded-md">
-                <Image
-                  src={match.competition.emblem || ''}
-                  alt={match.competition.name || ''}
-                  width={20}
-                  height={20}
-                />
-                <p className="ml-2 text-sm text-teal-400">{match.competition.name}</p>
-              </div>
-            )}
-
-            {/* Match row */}
-            <div className="flex justify-between px-6 py-1 bg-slate-700 rounded-md">
-              <p>{match.homeTeam?.shortName ?? 'Unknown'}</p>
-              <p>{match.score?.fullTime?.home ?? '-'}:{match.score?.fullTime?.away ?? '-'}</p>
-              <p>{match.awayTeam?.shortName ?? 'Unknown'}</p>
-            </div>
+          <div key={match.id}>
+            {showDate && <DateHeader date={match.utcDate} />}
+            {showCompetition && <CompetitionHeader match={match} />}
+            <Matches match={match} showCompetition={showCompetition} />
           </div>
         )
       })}

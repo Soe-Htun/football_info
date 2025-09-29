@@ -2,15 +2,17 @@ import {FC} from 'react'
 import LinkSide from './LinkSide'
 
 const Leagues = [
-  { id:1,name:"Premier League",href:"premier-league",emblem:"/img/leagues/premier_league.webp"},
-  { id:2,name:"Primera Division",href:"la-liga",emblem:"/img/leagues/laliga.svg"},
-  { id:3,name:"Bundesliga",href:"bundesliga",emblem:"/img/leagues/bundesliga.webp"},
-  { id:4,name:"Serie A",href:"serie-a",emblem:"/img/leagues/serie_a.webp"},
-  { id:5,name:"Ligue 1",href:"ligue-1",emblem:"/img/leagues/ligue_1.webp"},
-  { id:6,name:"Championship",href:"championship",emblem:"/img/leagues/championship.webp"},
-  { id:7,name:"Primeira Liga",href:"primeira-liga",emblem:"/img/leagues/liga_portugal.webp"},
-  { id:8,name:"Brazilian Championship Series A",href:"brazilian-series-a",emblem:"/img/leagues/brazilian_serie_a.webp"},
-  { id:9,name:"Copa Libertadores",href:"copa-libertadores",emblem:"/img/leagues/copa_libertadores.webp"},
+  { id:1,name:"Champions League",href:"champions-league",emblem:"/img/leagues/ucl.png"},
+  { id:2,name:"Europa League",href:"europa-league",emblem:"/img/leagues/uel.png"},
+  { id:3,name:"Conference League",href:"conference-league",emblem:"/img/leagues/ucel.png"},
+  { id:4,name:"Premier League",href:"premier-league",emblem:"/img/leagues/premier_league.webp"},
+  { id:5,name:"LaLiga",href:"la-liga",emblem:"/img/leagues/laliga.svg"},
+  { id:6,name:"Bundesliga",href:"bundesliga",emblem:"/img/leagues/bundesliga.webp"},
+  { id:7,name:"Serie A",href:"serie-a",emblem:"/img/leagues/serie_a.webp"},
+  { id:8,name:"Ligue 1",href:"ligue-1",emblem:"/img/leagues/ligue_1.webp"},
+  { id:10,name:"Primeira Liga",href:"primeira-liga",emblem:"/img/leagues/liga_portugal.webp"},
+  { id:11,name:"Brazilian Championship Series A",href:"brazilian-series-a",emblem:"/img/leagues/brazilian_serie_a.webp"},
+  { id:12,name:"Copa Libertadores",href:"copa-libertadores",emblem:"/img/leagues/copa_libertadores.webp"},
 ]
 
 const Sidebar:FC = () => {

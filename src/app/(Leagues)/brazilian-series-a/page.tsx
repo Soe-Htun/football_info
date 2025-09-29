@@ -5,11 +5,7 @@ const Brasileiro = async () => {
   const getBrasileiro = await filterLeague('Campeonato Brasileiro Série A')
   return (
     <div className='w-full'>
-      {getBrasileiro.map((data) => (
-        <div key={data.id}>
-          <LeagueTable data={data} />
-        </div>
-      ))}
+      <LeagueTable matches={getBrasileiro} />
     </div>
   )
 }

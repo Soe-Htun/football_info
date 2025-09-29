@@ -6,11 +6,7 @@ const English = async () => {
 
   return (
     <div className='w-full'>
-      {getEnglishLeague.map((data) => (
-        <div key={data.id}>
-          <LeagueTable data={data} />
-        </div>
-      ))}
+      <LeagueTable matches={getEnglishLeague} />
     </div>
   )
 }

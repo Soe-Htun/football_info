@@ -3,12 +3,13 @@
 import { matchesType } from '@/types'
 import Image from 'next/image'
 
-interface MatchesProps {
+interface MatchCardProps {
   match: matchesType
   showCompetition: boolean
+  isLastInCompetition: boolean
 }
 
-const Matches = ({ match, showCompetition }: MatchesProps) => {
+const MatchCard = ({ match, showCompetition, isLastInCompetition }: MatchCardProps) => {
   const teamNameMap: Record<string, string> = {
     Atleti: "Atletico Madrid",
     Barça: "Barcelona",
@@ -32,10 +33,13 @@ const Matches = ({ match, showCompetition }: MatchesProps) => {
   }
 
   return (
-    <div className={`bg-slate-800 p-4 border-x border-slate-600/30 ${
+    <div className={`bg-slate-800 p-4 hover:bg-slate-750 transition-all duration-200 border-x border-slate-600/30 ${
       showCompetition ? '' : 'border-t'
-    } rounded-b-xl border-b`}>
+    } ${
+      isLastInCompetition ? 'rounded-b-xl border-b' : ''
+    }`}>
       <div className="flex items-center justify-between">
+        {/* Status indicator */}
         {(match.status === 'FINISHED' || match.status === 'IN_PLAY') && (
           <div className="flex items-center">
             <span className={`text-xs font-medium mr-3 ${match.status === 'FINISHED' ? 'text-gray-400' : 'text-red-500'}`}>
@@ -47,6 +51,7 @@ const Matches = ({ match, showCompetition }: MatchesProps) => {
           </div>
         )}
 
+        {/* Home team */}
         <div className="flex items-center space-x-3 flex-1 min-w-0">
           <div className="w-8 h-8 relative flex-shrink-0">
             {match.homeTeam?.crest ? (
@@ -67,6 +72,7 @@ const Matches = ({ match, showCompetition }: MatchesProps) => {
           </span>
         </div>
 
+        {/* Score/Status */}
         <div className="flex flex-col items-center px-4 min-w-[80px]">
           {match.status === 'FINISHED' || match.status === 'IN_PLAY' ? (
             <div className="flex items-center space-x-1">
@@ -95,6 +101,7 @@ const Matches = ({ match, showCompetition }: MatchesProps) => {
           )}
         </div>
 
+        {/* Away team */}
         <div className="flex items-center space-x-3 flex-1 min-w-0 justify-end">
           <span className="text-white font-medium text-sm truncate text-right">
             {getTeamDisplayName(match.awayTeam?.shortName)}
@@ -119,4 +126,4 @@ const Matches = ({ match, showCompetition }: MatchesProps) => {
   )
 }
 
-export default Matches
+export default MatchCard

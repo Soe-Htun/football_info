@@ -38,7 +38,7 @@ const Status = ({ matches }: { matches: matchesType[] }) => {
       <div className="flex justify-between items-center mb-4">
         <button
           onClick={() => setDayOffset((p) => p - 1)}
-          className="px-2 py-1 text-primary text-xs md:text-sm rounded-md bg-slate-500 hover:bg-slate-600"
+          className="px-2 py-1 text-white text-xs md:text-sm rounded-md bg-slate-500 hover:bg-slate-600"
         >
           {"<"}
         </button>
@@ -47,7 +47,7 @@ const Status = ({ matches }: { matches: matchesType[] }) => {
         </span>
         <button
           onClick={() => setDayOffset((p) => p + 1)}
-          className="px-2 py-1 text-primary text-xs md:text-sm rounded-md bg-slate-500 hover:bg-slate-600"
+          className="px-2 py-1 text-white text-xs md:text-sm rounded-md bg-slate-500 hover:bg-slate-600"
         >
           {">"}
         </button>
@@ -56,11 +56,7 @@ const Status = ({ matches }: { matches: matchesType[] }) => {
       {/* Matches */}
       <div className="w-full">
         {filteredMatches.length > 0 ? (
-          filteredMatches.map((data) => (
-            <div key={data.id}>
-              <LeagueTable matches={filteredMatches} data={data} />
-            </div>
-          ))
+          <LeagueTable matches={filteredMatches} />
         ) : (
           <div className="text-center text-gray-400 mt-4">
             No matches scheduled for {formatDate(targetDate)}.
