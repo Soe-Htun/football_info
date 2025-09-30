@@ -22,14 +22,13 @@ const MatchCard = ({ match, showCompetition, isLastInCompetition }: MatchCardPro
 
   const formatTime = (dateString: string) => {
     const date = new Date(dateString)
-    const hours = date.getUTCHours()
-    const minutes = date.getUTCMinutes()
 
-    const hour12 = hours === 0 ? 12 : hours > 12 ? hours - 12 : hours
-    const ampm = hours >= 12 ? 'PM' : 'AM'
-    const minutesStr = minutes.toString().padStart(2, '0')
-
-    return `${hour12}:${minutesStr} ${ampm}`
+    // Convert to local time directly without relying on timezone detection
+    return date.toLocaleTimeString([], {
+      hour: 'numeric',
+      minute: '2-digit',
+      hour12: true
+    })
   }
 
   return (

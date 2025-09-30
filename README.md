@@ -13,7 +13,7 @@ pnpm dev
 ```
 
 ## Live links
-[Live here 💻](https://football-info-matches.vercel.app/)
+[Live here 💻](https://footballinfobysoe.netlify.app/)
 
 ## Preview
 
