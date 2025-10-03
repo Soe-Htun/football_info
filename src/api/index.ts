@@ -93,6 +93,47 @@ export const getMatchesTomorrow = () => {
   return getMatchesForDate(d)
 }
 
+// Fetch detailed match information including lineups, goals, substitutions
+export const getMatchDetails = async (matchId: number) => {
+  // Return empty data during build if no API token
+  if (!process.env.API_TOKEN) {
+    console.log('No API token found, returning empty data for build')
+    return null
+  }
+
+  const cacheKey = `match-${matchId}`
+
+  // Check client-side cache first
+  if (clientCache.has(cacheKey)) {
+    const cached = clientCache.get(cacheKey)!
+    if (Date.now() - cached.timestamp < CACHE_DURATION) {
+      console.log(`Using cached match data for ${matchId}`)
+      return cached.data
+    }
+  }
+
+  console.log(`Fetching detailed match data for ID: ${matchId}`)
+  const res = await fetch(
+    `https://api.football-data.org/v4/matches/${matchId}`,
+    options
+  )
+
+  if (!res.ok) {
+    if (res.status === 429) {
+      throw new Error(`Rate limit exceeded. Please wait a moment before refreshing.`)
+    }
+    throw new Error(`Match details API error: ${res.status}`)
+  }
+
+  const data = await res.json()
+  console.log(`Fetched detailed data for match ${matchId}`)
+
+  // Cache the result
+  clientCache.set(cacheKey, { data, timestamp: Date.now() })
+
+  return data
+}
+
 export const getMatchesfootball = async () => {
   console.log('Fetching all matches without date filter...')
   const matchData = await fetch('https://api.football-data.org/v4/matches',options)
@@ -153,8 +194,7 @@ export const getNewsInfo = async () => {
 export const filterLeague = async (filterData: string) => {
   const today = await getMatchesToday()
   const matches: matchesType[] = today?.matches
-  console.log('Matches', matches);
-  
+
   return matches.filter((m) => m.competition.name === filterData)
 }
 

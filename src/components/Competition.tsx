@@ -31,7 +31,6 @@ const Competition = ({ matches }: CompetitionProps) => {
     if (aOrder !== bOrder) {
       return aOrder - bOrder
     }
-
     return new Date(a.utcDate).getTime() - new Date(b.utcDate).getTime()
   })
 

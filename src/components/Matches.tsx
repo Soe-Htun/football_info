@@ -12,6 +12,10 @@ const Matches = ({ match, showCompetition }: MatchesProps) => {
   const teamNameMap: Record<string, string> = {
     Atleti: "Atletico Madrid",
     Barça: "Barcelona",
+    "SL Benfica": "Benfica",
+    Bayern: "Bayern München",
+    "Union SG": "Union St.Gilloise",
+    "Qarabağ Ağdam": "Qarabag",
   }
 
   const getTeamDisplayName = (shortName?: string) => {
@@ -19,23 +23,20 @@ const Matches = ({ match, showCompetition }: MatchesProps) => {
     return teamNameMap[shortName] || shortName
   }
 
-  const formatTime = (dateString: string) => {
-    const date = new Date(dateString)
-    const hours = date.getUTCHours()
-    const minutes = date.getUTCMinutes()
 
-    const hour12 = hours === 0 ? 12 : hours > 12 ? hours - 12 : hours
-    const ampm = hours >= 12 ? 'PM' : 'AM'
-    const minutesStr = minutes.toString().padStart(2, '0')
-
-    return `${hour12}:${minutesStr} ${ampm}`
-  }
+  const timeFormatter = new Intl.DateTimeFormat('en-US', {
+    hour: 'numeric',
+    minute: '2-digit',
+    hour12: true,
+  })
+  const formatted = timeFormatter.format(new Date(match.utcDate));
+  const [time, period] = formatted.split(' ');
 
   return (
-    <div className={`bg-slate-800 p-4 border-x border-slate-600/30 ${
+    <div className={`bg-slate-800 border-x border-slate-600/30 ${
       showCompetition ? '' : 'border-t'
     } rounded-b-xl border-b`}>
-      <div className="flex items-center justify-between">
+      <div className="p-4 flex items-center justify-between">
         {(match.status === 'FINISHED' || match.status === 'IN_PLAY') && (
           <div className="flex items-center">
             <span className={`text-xs font-medium mr-3 ${match.status === 'FINISHED' ? 'text-gray-400' : 'text-red-500'}`}>
@@ -81,10 +82,10 @@ const Matches = ({ match, showCompetition }: MatchesProps) => {
           ) : (
             <div className="text-center">
               <div className="text-gray-400 text-sm font-medium">
-                {formatTime(match.utcDate).split(' ')[0]}
+                {time}
               </div>
               <div className="text-gray-400 text-[13px]">
-                {formatTime(match.utcDate).split(' ')[1]}
+                {period}
               </div>
             </div>
           )}
@@ -115,6 +116,7 @@ const Matches = ({ match, showCompetition }: MatchesProps) => {
           </div>
         </div>
       </div>
+
     </div>
   )
 }

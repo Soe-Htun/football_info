@@ -39,6 +39,7 @@ export type scores = {
   }
 }
 
+
 export type matchesType = {
   area: matchesArea,
   competition: matchesCompetition,
